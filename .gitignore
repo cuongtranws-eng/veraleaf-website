@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+
+# uploaded files (Payload media)
+/media/
+
+npm-debug.log*
+.DS_Store
+
+# local backups (database dumps contain user data)
+/backups/

@@ -1,0 +1,7 @@
+# Store text with LF; keep shell scripts LF and PowerShell scripts CRLF everywhere.
+* text=auto eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.png binary
+*.jpg binary
+*.webp binary

@@ -1,0 +1,160 @@
+/* ============================================================
+   VeraLeaf CMS — admin theme (dark botanical, matches the website)
+   Unlayered rules override Payload's @layer payload-default.
+   ============================================================ */
+
+/* Green-tinted neutral scale (Payload maps --theme-elevation-* onto these) */
+:root {
+  --color-base-0: rgb(246, 249, 245);
+  --color-base-50: rgb(236, 242, 236);
+  --color-base-100: rgb(222, 231, 223);
+  --color-base-150: rgb(205, 217, 207);
+  --color-base-200: rgb(189, 203, 191);
+  --color-base-250: rgb(172, 188, 175);
+  --color-base-300: rgb(156, 173, 159);
+  --color-base-350: rgb(140, 158, 144);
+  --color-base-400: rgb(125, 143, 129);
+  --color-base-450: rgb(111, 129, 115);
+  --color-base-500: rgb(98, 115, 102);
+  --color-base-550: rgb(86, 102, 90);
+  --color-base-600: rgb(75, 90, 79);
+  --color-base-650: rgb(64, 78, 68);
+  --color-base-700: rgb(54, 67, 58);
+  --color-base-750: rgb(44, 56, 48);
+  --color-base-800: rgb(34, 45, 38);
+  --color-base-850: rgb(25, 35, 29);
+  --color-base-900: rgb(14, 22, 17);
+  --color-base-950: rgb(9, 15, 11);
+  --color-base-1000: rgb(5, 10, 7);
+
+  /* "success" palette → VeraLeaf greens / lime */
+  --color-success-50: rgb(240, 250, 232);
+  --color-success-100: rgb(226, 245, 210);
+  --color-success-150: rgb(206, 238, 178);
+  --color-success-200: rgb(196, 236, 140);
+  --color-success-250: rgb(185, 231, 105);
+  --color-success-300: rgb(166, 220, 88);
+  --color-success-350: rgb(145, 205, 74);
+  --color-success-400: rgb(124, 190, 64);
+  --color-success-450: rgb(106, 173, 58);
+  --color-success-500: rgb(92, 156, 52);
+  --color-success-550: rgb(80, 140, 48);
+  --color-success-600: rgb(69, 124, 44);
+  --color-success-650: rgb(59, 108, 40);
+  --color-success-700: rgb(50, 93, 37);
+  --color-success-750: rgb(42, 79, 33);
+  --color-success-800: rgb(35, 66, 30);
+  --color-success-850: rgb(28, 54, 27);
+  --color-success-900: rgb(22, 42, 23);
+  --color-success-950: rgb(16, 31, 19);
+
+  --vl-lime: #b9e769;
+  --vl-fern: url('https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=2000&q=75');
+  --style-radius-s: 8px;
+  --style-radius-m: 12px;
+  --style-radius-l: 18px;
+}
+
+html[data-theme='dark'] {
+  --theme-bg: var(--color-base-900);
+  --theme-input-bg: var(--color-base-850);
+  --theme-text: rgb(236, 242, 236);
+}
+
+/* Primary buttons: lime on dark */
+html[data-theme='dark'] .btn--style-primary {
+  --bg-color: var(--vl-lime);
+  --color: #0b140f;
+  --hover-bg: rgb(206, 238, 150);
+  --hover-color: #0b140f;
+}
+.btn { border-radius: 999px; }
+
+/* Links & focus */
+html[data-theme='dark'] a:not(.btn):not(.nav__link):not(.card) { color: var(--vl-lime); }
+html[data-theme='dark'] *:focus-visible { outline-color: var(--vl-lime); }
+
+/* ---------- Login page: fern photo + frosted panel ---------- */
+.template-minimal {
+  position: relative;
+  isolation: isolate;
+  background: #070d0a;
+}
+.template-minimal::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: var(--vl-fern) center / cover no-repeat;
+  opacity: .6;
+  animation: vl-drift 40s ease-in-out infinite alternate;
+}
+.template-minimal::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 90% at 50% 0%, rgba(7, 13, 10, .25), rgba(7, 13, 10, .88) 70%);
+}
+.template-minimal__wrap {
+  padding: 40px 36px;
+  border-radius: 28px;
+  background: rgba(14, 26, 19, .62);
+  border: 1px solid rgba(255, 255, 255, .13);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, .9);
+  animation: vl-rise .8s cubic-bezier(.22, .7, .18, 1) both;
+}
+@keyframes vl-drift { from { transform: scale(1.06); } to { transform: scale(1.14) translate(-1%, -1%); } }
+@keyframes vl-rise { from { opacity: 0; transform: translateY(18px); filter: blur(6px); } }
+@media (prefers-reduced-motion: reduce) {
+  .template-minimal::before, .template-minimal__wrap { animation: none; }
+}
+
+.vl-admin-logo { display: flex; align-items: center; gap: 12px; }
+.vl-admin-logo img { height: 56px; width: auto; filter: drop-shadow(0 4px 14px rgba(0, 0, 0, .5)); }
+.vl-admin-logo span {
+  font-size: 12px; font-weight: 600; letter-spacing: 3px; color: var(--vl-lime);
+  border: 1px solid rgba(185, 231, 105, .45); border-radius: 999px; padding: 4px 10px;
+}
+.login__brand { margin-bottom: 8px; }
+.vl-before-login { margin-bottom: 24px; }
+.vl-before-login h1 { margin: 0 0 6px; font-size: 26px; font-weight: 400; letter-spacing: -.4px; }
+.vl-before-login p { margin: 0; color: var(--theme-elevation-500); font-size: 14px; }
+
+/* ---------- Navigation ---------- */
+.vl-admin-icon { display: block; }
+html[data-theme='dark'] .nav { background: var(--color-base-950); border-right: 1px solid var(--color-base-800); }
+.nav__link { border-radius: 10px; transition: background .25s, color .25s; }
+html[data-theme='dark'] .nav__link:hover { background: var(--color-base-850); }
+html[data-theme='dark'] .nav__link-indicator { background: var(--vl-lime); }
+
+/* ---------- Dashboard ---------- */
+.vl-dashboard-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 32px;
+  border-radius: 24px;
+  padding: 36px 36px 32px;
+  border: 1px solid rgba(255, 255, 255, .1);
+  background: linear-gradient(180deg, rgba(7, 13, 10, .35), rgba(7, 13, 10, .82)), var(--vl-fern) center / cover;
+  color: #eef3ef;
+}
+.vl-kicker { display: block; font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--vl-lime); margin-bottom: 10px; }
+.vl-dashboard-hero h2 { margin: 0 0 10px; font-size: 32px; font-weight: 300; letter-spacing: -.6px; color: #fff; }
+.vl-dashboard-hero p { margin: 0 0 22px; max-width: 720px; color: rgba(238, 243, 239, .78); line-height: 1.7; }
+.vl-dashboard-hero__links { display: flex; flex-wrap: wrap; gap: 8px; }
+.vl-dashboard-hero__links a {
+  color: #eef3ef !important; text-decoration: none; font-size: 13px;
+  padding: 9px 16px; border-radius: 999px;
+  background: rgba(14, 26, 19, .55); border: 1px solid rgba(255, 255, 255, .18);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: background .3s, border-color .3s, color .3s;
+}
+.vl-dashboard-hero__links a:hover { border-color: var(--vl-lime); background: rgba(30, 50, 38, .7); }
+.vl-dashboard-hero__links a.vl-primary { background: var(--vl-lime); color: #0b140f !important; border-color: var(--vl-lime); font-weight: 600; }
+
+/* Collection cards on the dashboard */
+html[data-theme='dark'] .card { background: var(--color-base-850); border-color: var(--color-base-800); transition: border-color .3s, transform .3s, background .3s; }
+html[data-theme='dark'] .card:hover { border-color: rgba(185, 231, 105, .5); background: var(--color-base-800); transform: translateY(-2px); }
