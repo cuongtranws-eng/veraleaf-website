@@ -50,9 +50,12 @@ git clone <địa-chỉ-repo> veraleaf     # hoặc giải nén file zip vào /v
 cd veraleaf
 nano .env                              # điền theo mục "Chuẩn bị chung"
 
-# 4. Cài đặt, tạo bảng, build
+# 4. Cài đặt, tạo bảng, nạp nội dung ban đầu, build
 npm ci
 npm run migrate
+npm run seed            # 6 lĩnh vực hoạt động (VI + EN)
+npm run import:legacy   # khẩu hiệu, giới thiệu, email, 2 số điện thoại, địa chỉ, Facebook
+npm run seed:org        # sơ đồ tổ chức (Hội đồng thành viên → Giám đốc → 3 phòng)
 npm run build
 
 # 5. Chạy nền và tự khởi động lại khi máy chủ reboot
@@ -83,6 +86,10 @@ apt install -y docker.io docker-compose-v2 nginx certbot python3-certbot-nginx
 cd /var/www/veraleaf
 nano .env     # PAYLOAD_SECRET, NEXT_PUBLIC_SERVER_URL=https://veraleaf.com.vn, DB_PASSWORD, SMTP_* ...
 docker compose up -d --build      # tự tạo PostgreSQL UTF-8, chạy migration rồi khởi động web
+# Nạp nội dung ban đầu (chỉ lần đầu):
+docker compose exec app npm run seed
+docker compose exec app npm run import:legacy
+docker compose exec app npm run seed:org
 ```
 Sau đó làm bước 6–7 của Cách A (Nginx + HTTPS + tường lửa).
 Cập nhật: `git pull && docker compose up -d --build`.
@@ -98,9 +105,17 @@ Cập nhật: `git pull && docker compose up -d --build`.
 
 ---
 
-## Chuyển dữ liệu hiện có từ máy tính lên máy chủ
+## Sau khi chạy lần đầu
 
-Nội dung bạn đã nhập (lĩnh vực, thông tin công ty, sơ đồ tổ chức, tài khoản admin…) đang nằm trong PostgreSQL trên máy tính. Để mang lên máy chủ:
+1. Mở `https://<tên-miền>/admin` → trang **Create first user** → tạo tài khoản quản trị (tài khoản đầu tiên tự động là Admin).
+2. Kiểm tra mục **Thông tin công ty**, **Lĩnh vực hoạt động**, **Sơ đồ tổ chức** đã có nội dung.
+3. Nhập thêm nội dung riêng (ví dụ **Đội ngũ tư vấn** kèm ảnh) trong admin.
+
+---
+
+## (Tuỳ chọn) Chuyển dữ liệu từ máy tính lên máy chủ
+
+Chỉ cần khi muốn mang nguyên database đang có trên máy tính (kể cả tài khoản admin và ảnh đã tải lên) thay vì các lệnh `seed` ở trên. Khi đó **bỏ qua** 3 lệnh `seed` / `import:legacy` / `seed:org`.
 
 1. Trên máy tính (Windows), trong thư mục dự án:
    ```powershell

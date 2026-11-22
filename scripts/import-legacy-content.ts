@@ -46,6 +46,7 @@ const legacy = {
 const contact = {
   email: 'veraleaf.registry@gmail.com',
   phone: '0866 852 863',
+  phone2: '0362 156 333',
   socialLinks: [{ platform: 'facebook' as const, url: 'https://www.facebook.com/profile.php?id=61575101017653' }],
 };
 
@@ -60,6 +61,7 @@ for (const locale of ['vi', 'en'] as const) {
   if (locale === 'vi') {
     if (!current.email) data.email = contact.email;
     if (!current.phone) data.phone = contact.phone;
+    if (!current.phone2) data.phone2 = contact.phone2;
     if (!Array.isArray(current.socialLinks) || current.socialLinks.length === 0) data.socialLinks = contact.socialLinks;
   }
   if (Object.keys(data).length) {
